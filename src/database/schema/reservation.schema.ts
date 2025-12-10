@@ -1,9 +1,9 @@
 import { InferSelectModel, sql } from 'drizzle-orm';
 import { pgTable, text, timestamp, pgEnum } from 'drizzle-orm/pg-core';
 import { users } from './user.schema';
+import { properties } from './property.schema';
 
-// Define status enum
-export const reservationStatusEnum = pgEnum('reservation_status', [
+export const ReservationStatus = pgEnum('reservation_status', [
   'PENDING',
   'CONFIRMED',
   'CANCELED',
@@ -17,9 +17,12 @@ export const reservations = pgTable('reservations', {
   userId: text('user_id')
     .notNull()
     .references(() => users.id),
+  propertyId: text('property_id')
+    .notNull()
+    .references(() => properties.id),
   startDate: timestamp('start_date').notNull(),
   endDate: timestamp('end_date').notNull(),
-  status: reservationStatusEnum('status').notNull(),
+  status: ReservationStatus('status').notNull(),
 
   createdAt: timestamp('created_at').defaultNow(),
   updatedAt: timestamp('updated_at', { mode: 'date', precision: 3 }).$onUpdate(
