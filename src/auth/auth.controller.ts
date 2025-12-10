@@ -6,7 +6,7 @@ import { AuthService } from './auth.service';
 import { LocalAuthGuard } from './guards/local-auth.guard';
 import { CurrentUser } from './decorators/current-user.decorator';
 import { LoginDto } from './dto/login.dto';
-import type { User } from '../database/database-schema';
+import type { User } from '../database/schema';
 
 @Controller('auth')
 export class AuthController {
@@ -15,10 +15,10 @@ export class AuthController {
   @Post('login')
   @UseGuards(LocalAuthGuard)
   @ApiBody({ type: LoginDto })
-  async login(
+  login(
     @CurrentUser() user: User,
     @Res({ passthrough: true }) response: Response,
   ) {
-    await this.authService.login(user, response);
+    return this.authService.login(user, response);
   }
 }

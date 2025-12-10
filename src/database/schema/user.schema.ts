@@ -9,6 +9,7 @@ export const users = pgTable('users', {
   name: text('name').notNull(),
   lastName: text('last_name').notNull(),
   password: text('password').notNull(),
+
   createdAt: timestamp('created_at').defaultNow(),
   updatedAt: timestamp('updated_at', { mode: 'date', precision: 3 }).$onUpdate(
     () => sql`CURRENT_TIMESTAMP`,
@@ -16,7 +17,3 @@ export const users = pgTable('users', {
 });
 
 export type User = InferSelectModel<typeof users>;
-
-export const databaseSchema = {
-  users,
-};

@@ -8,7 +8,7 @@ function requireEnv(name: string): string {
 }
 
 export default defineConfig({
-  schema: './src/database/database-schema.ts',
+  schema: './src/database/schema/**/*.ts',
   out: './src/database/migrations',
   dialect: 'postgresql',
   dbCredentials: {

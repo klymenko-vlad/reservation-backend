@@ -5,7 +5,7 @@ import { Response } from 'express';
 import { TokenPayload } from './types/token-payload.interface';
 import * as bcrypt from 'bcrypt';
 import { UsersService } from '../users/users.service';
-import { User } from '../database/database-schema';
+import { User } from '../database/schema';
 
 @Injectable()
 export class AuthService {
