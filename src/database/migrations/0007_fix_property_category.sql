@@ -1,0 +1,2 @@
+CREATE TYPE "public"."property_category" AS ENUM('HOTEL', 'APARTMENT', 'HOUSE', 'ROOM');--> statement-breakpoint
+ALTER TABLE "items" ALTER COLUMN "category" SET DATA TYPE "public"."property_category" USING "category"::text::"public"."property_category";

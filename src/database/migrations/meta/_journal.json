@@ -5,36 +5,15 @@
     {
       "idx": 0,
       "version": "7",
-      "when": 1765105692965,
-      "tag": "0000_shallow_blur",
+      "when": 1765720319800,
+      "tag": "0000_property price",
       "breakpoints": true
     },
     {
       "idx": 1,
       "version": "7",
-      "when": 1765105762934,
-      "tag": "0001_cheerful_jackal",
-      "breakpoints": true
-    },
-    {
-      "idx": 2,
-      "version": "7",
-      "when": 1765107673385,
-      "tag": "0002_change-id-to-string",
-      "breakpoints": true
-    },
-    {
-      "idx": 3,
-      "version": "7",
-      "when": 1765376751202,
-      "tag": "0003_cloudy_blizzard",
-      "breakpoints": true
-    },
-    {
-      "idx": 4,
-      "version": "7",
-      "when": 1765377892520,
-      "tag": "0004_added_property_schema",
+      "when": 1765722554025,
+      "tag": "0001_updated price property",
       "breakpoints": true
     }
   ]

@@ -1,0 +1,1 @@
+ALTER TABLE "properties" RENAME COLUMN "price_per_night" TO "price_per_night_cents";

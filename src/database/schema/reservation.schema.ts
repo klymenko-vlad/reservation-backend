@@ -3,11 +3,18 @@ import { pgTable, text, timestamp, pgEnum } from 'drizzle-orm/pg-core';
 import { users } from './user.schema';
 import { properties } from './property.schema';
 
+export enum ReservationStatusEnum {
+  PENDING = 'PENDING',
+  CONFIRMED = 'CONFIRMED',
+  CANCELED = 'CANCELED',
+  COMPLETED = 'COMPLETED',
+}
+
 export const ReservationStatus = pgEnum('reservation_status', [
-  'PENDING',
-  'CONFIRMED',
-  'CANCELED',
-  'COMPLETED',
+  ReservationStatusEnum.PENDING,
+  ReservationStatusEnum.CONFIRMED,
+  ReservationStatusEnum.CANCELED,
+  ReservationStatusEnum.COMPLETED,
 ]);
 
 export const reservations = pgTable('reservations', {

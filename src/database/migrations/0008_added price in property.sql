@@ -1,0 +1,1 @@
+ALTER TABLE "items" ADD COLUMN "price_per_night" numeric(10, 2);

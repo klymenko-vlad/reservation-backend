@@ -8,6 +8,7 @@ import { users } from '../database/schema';
 import { eq } from 'drizzle-orm';
 import { CreateUserDto } from './dto/create-user.dto';
 import * as bcrypt from 'bcrypt';
+import { roles, userRoles } from '../database/schema/roles.schema';
 
 @Injectable()
 export class UsersService {
@@ -47,16 +48,33 @@ export class UsersService {
       );
     }
 
-    const user = await this.drizzleService.db
-      .insert(users)
-      .values({
-        email: createUserDto.email,
-        password: await bcrypt.hash(createUserDto.password, 10),
-        name: createUserDto.name ?? '',
-        lastName: createUserDto.lastName ?? '',
-      })
-      .returning();
+    return this.drizzleService.db.transaction(async (tx) => {
+      const [user] = await tx
+        .insert(users)
+        .values({
+          email: createUserDto.email,
+          password: await bcrypt.hash(createUserDto.password, 10),
+          name: createUserDto.name ?? '',
+          lastName: createUserDto.lastName ?? '',
+        })
+        .returning();
 
-    return user[0];
+      const [role] = await tx
+        .select()
+        .from(roles)
+        .where(eq(roles.name, createUserDto.role ?? 'USER'))
+        .limit(1);
+
+      if (!role) {
+        throw new Error(`Role ${createUserDto.role ?? 'USER'} not found`);
+      }
+
+      await tx.insert(userRoles).values({
+        userId: user.id,
+        roleId: role.id,
+      });
+
+      return user;
+    });
   }
 }
