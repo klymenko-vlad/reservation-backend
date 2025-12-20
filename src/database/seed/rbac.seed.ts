@@ -12,8 +12,12 @@ export async function seedRbac() {
     { resource: 'property', action: 'create' },
     { resource: 'property', action: 'update' },
     { resource: 'property', action: 'read' },
+    { resource: 'property', action: 'delete' },
+
     { resource: 'reservation', action: 'create' },
     { resource: 'reservation', action: 'read' },
+    { resource: 'reservation', action: 'update' },
+    { resource: 'reservation', action: 'delete' },
   ];
 
   for (const permission of permissionList) {
@@ -30,11 +34,18 @@ export async function seedRbac() {
   );
 
   const rolePermissionMatrix: Record<string, string[]> = {
-    USER: ['property:read', 'reservation:create', 'reservation:read'],
+    USER: [
+      'property:read',
+      'reservation:create',
+      'reservation:read',
+      'reservation:update',
+      'reservation:delete',
+    ],
     HOST: [
       'property:create',
       'property:update',
       'property:read',
+      'property:delete',
       'reservation:read',
     ],
   };

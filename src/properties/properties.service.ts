@@ -33,4 +33,38 @@ export class PropertiesService {
 
     return result[0];
   }
+
+  async findOnePropertyAndDelete(id: string, userId: string) {
+    const property = await this.findOneProperty(id);
+
+    if (property.userId !== userId) {
+      throw new NotFoundException('Property not found for this user');
+    }
+
+    await this.drizzleService.db
+      .delete(properties)
+      .where(eq(properties.id, id));
+
+    return property;
+  }
+
+  async findOnePropertyAndUpdate(
+    id: string,
+    userId: string,
+    updateData: Partial<CreatePropertyDto>,
+  ) {
+    const property = await this.findOneProperty(id);
+
+    if (property.userId !== userId) {
+      throw new NotFoundException('Property not found for this user');
+    }
+
+    const result = await this.drizzleService.db
+      .update(properties)
+      .set(updateData)
+      .where(eq(properties.id, id))
+      .returning();
+
+    return result[0];
+  }
 }
