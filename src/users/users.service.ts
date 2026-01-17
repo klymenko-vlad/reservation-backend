@@ -77,4 +77,14 @@ export class UsersService {
       return user;
     });
   }
+
+  async getUserWithRole(id: string) {
+    const result = await this.drizzleService.db
+      .select({ role: roles.name })
+      .from(userRoles)
+      .innerJoin(roles, eq(userRoles.roleId, roles.id))
+      .where(eq(userRoles.userId, id))
+      .limit(1);
+    return result[0] ?? null;
+  }
 }

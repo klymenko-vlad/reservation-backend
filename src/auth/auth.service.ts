@@ -57,4 +57,11 @@ export class AuthService {
     }
     return user;
   }
+
+  logout(response: Response) {
+    response.clearCookie('Authentication', {
+      httpOnly: true,
+      path: '/',
+    });
+  }
 }

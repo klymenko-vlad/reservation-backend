@@ -3,6 +3,7 @@ import { DatabaseService } from '../database/database.service';
 import { reservations } from '../database/schema/reservation.schema';
 import { eq } from 'drizzle-orm';
 import { CreateReservationDto } from './dto/create-reservation.dto';
+import { UpdateReservationDto } from './dto/update-reservation.dto';
 
 @Injectable()
 export class ReservationsService {
@@ -40,5 +41,38 @@ export class ReservationsService {
       .returning();
 
     return result[0];
+  }
+
+  async deleteReservation(userId: string, id: string) {
+    const reservation = await this.getReservationById(userId, id);
+
+    if (!reservation) {
+      throw new NotFoundException('Reservation not found');
+    }
+
+    await this.drizzleService.db
+      .delete(reservations)
+      .where(eq(reservations.id, id));
+  }
+
+  async updateReservation(
+    userId: string,
+    id: string,
+    data: UpdateReservationDto,
+  ) {
+    const reservation = await this.getReservationById(userId, id);
+
+    if (!reservation) {
+      throw new NotFoundException('Reservation not found');
+    }
+
+    return this.drizzleService.db
+      .update(reservations)
+      .set({
+        ...reservation,
+        ...data,
+      })
+      .where(eq(reservations.id, id))
+      .returning();
   }
 }

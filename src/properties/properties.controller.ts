@@ -18,11 +18,11 @@ import { Permissions } from '../auth/decorators/permissions.decorator';
 import { type UpdateReservationDto } from '../reservations/dto/update-reservation.dto';
 
 @Controller('properties')
-@UseGuards(JwtAuthGuard, RbacGuard)
 export class PropertiesController {
   constructor(private readonly propertiesService: PropertiesService) {}
 
   @Post()
+  @UseGuards(JwtAuthGuard, RbacGuard)
   @Permissions('property:create')
   createProperty(
     @Body() createPropertyDto: CreatePropertyDto,
@@ -32,24 +32,24 @@ export class PropertiesController {
   }
 
   @Get()
-  @Permissions('property:read')
   getAllProperties() {
     return this.propertiesService.findAllProperties();
   }
 
   @Get(':id')
-  @Permissions('property:read')
   getPropertyById(@Param('id') id: string) {
     return this.propertiesService.findOneProperty(id);
   }
 
   @Delete(':id')
+  @UseGuards(JwtAuthGuard, RbacGuard)
   @Permissions('property:delete')
   deletePropertyById(@Param('id') id: string, @CurrentUser() user: User) {
     return this.propertiesService.findOnePropertyAndDelete(id, user.id);
   }
 
   @Patch(':id')
+  @UseGuards(JwtAuthGuard, RbacGuard)
   @Permissions('property:update')
   updatePropertyById(
     @Param('id') id: string,

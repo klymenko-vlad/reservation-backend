@@ -22,8 +22,13 @@ export class UsersController {
 
   @Get('/me')
   @UseGuards(JwtAuthGuard)
-  getMe(@CurrentUser() user: User) {
-    return this.usersService.getUserById(user.id);
+  async getMe(@CurrentUser() user: User) {
+    const { role } = await this.usersService.getUserWithRole(user.id);
+    const retrievedUser = await this.usersService.getUserById(user.id);
+    return {
+      ...retrievedUser,
+      role,
+    };
   }
 
   @Post()

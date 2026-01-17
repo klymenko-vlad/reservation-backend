@@ -1,4 +1,4 @@
-import { Body, Controller, Post, Res, UseGuards } from '@nestjs/common';
+import { Controller, Post, Res, UseGuards } from '@nestjs/common';
 import type { Response } from 'express';
 import { ApiBody } from '@nestjs/swagger';
 
@@ -20,5 +20,11 @@ export class AuthController {
     @Res({ passthrough: true }) response: Response,
   ) {
     return this.authService.login(user, response);
+  }
+
+  @Post('logout')
+  logout(@Res({ passthrough: true }) response: Response) {
+    this.authService.logout(response);
+    return { message: 'ok' };
   }
 }
