@@ -1,7 +1,6 @@
 import { defineConfig } from 'drizzle-kit';
 import 'dotenv/config';
 
-// Support both DATABASE_URL (production) and individual vars (local dev)
 const getDbCredentials = () => {
   if (process.env.DATABASE_URL) {
     return { url: process.env.DATABASE_URL };
