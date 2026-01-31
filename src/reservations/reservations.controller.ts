@@ -15,7 +15,7 @@ import { CurrentUser } from '../auth/decorators/current-user.decorator';
 import type { User } from '../database/schema';
 import { RbacGuard } from '../auth/guards/rbac.guard';
 import { Permissions } from '../auth/decorators/permissions.decorator';
-import { type UpdateReservationDto } from './dto/update-reservation.dto';
+import { UpdateReservationDto } from './dto/update-reservation.dto';
 
 @Controller('reservations')
 @UseGuards(JwtAuthGuard, RbacGuard)

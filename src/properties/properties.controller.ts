@@ -15,7 +15,7 @@ import { CurrentUser } from '../auth/decorators/current-user.decorator';
 import { type User } from '../database/schema';
 import { RbacGuard } from '../auth/guards/rbac.guard';
 import { Permissions } from '../auth/decorators/permissions.decorator';
-import { type UpdateReservationDto } from '../reservations/dto/update-reservation.dto';
+import { UpdatePropertyDto } from './dto/update-property.dto';
 
 @Controller('properties')
 export class PropertiesController {
@@ -54,7 +54,7 @@ export class PropertiesController {
   updatePropertyById(
     @Param('id') id: string,
     @CurrentUser() user: User,
-    @Body() updateData: UpdateReservationDto,
+    @Body() updateData: UpdatePropertyDto,
   ) {
     return this.propertiesService.findOnePropertyAndUpdate(
       id,

@@ -68,10 +68,7 @@ export class ReservationsService {
 
     return this.drizzleService.db
       .update(reservations)
-      .set({
-        ...reservation,
-        ...data,
-      })
+      .set(data)
       .where(eq(reservations.id, id))
       .returning();
   }
